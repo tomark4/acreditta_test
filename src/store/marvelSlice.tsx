@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { ParamsI, StateI } from "../interfaces/marvel.interface";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { CategoriesT, ParamsI, StateI } from "../interfaces/marvel.interface";
 import { getCharacters, getComics, getSeries, getStories } from "../services/marvel.service";
 
 
@@ -45,10 +45,10 @@ const marvelSlice = createSlice({
     name: 'marvel',
     initialState,
     reducers:{
-        updateSearchText: (state, action) => {
+        updateSearchText: (state, action:PayloadAction<string>) => {
             state.searchText = action.payload;
         },
-        updateCategory:(state, action) => {
+        updateCategory:(state, action:PayloadAction<CategoriesT>) => {
             state.category = action.payload
         }
     },
