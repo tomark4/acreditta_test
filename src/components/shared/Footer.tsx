@@ -1,5 +1,10 @@
 import React from 'react'
 
+/**
+ * Footer shared component
+ * @author [jose quintero](https://jottasistemas.com)
+ */
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   return (

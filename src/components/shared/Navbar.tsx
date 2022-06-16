@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom'
 import logo from '../../assets/logo.png'
 
+/**
+ * Navbar shared component
+ * @author [jose quintero](https://jottasistemas.com)
+ */
+
 const Navbar = () => {
   return (
     <nav className="navbar navbar-dark bg-dark">

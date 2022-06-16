@@ -1,5 +1,11 @@
 import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
+
+/**
+ * Home page component
+ * @author [jose quintero](https://jottasistemas.com)
+ */
+
 const OPTIONS = [
   "Personajes",
   "Comics",
@@ -8,9 +14,11 @@ const OPTIONS = [
 ];
 
 const HomePage = () => {
+
   const [currentOption, setCurrentOption] = useState(OPTIONS[0]);
-  let navigate = useNavigate();
-  
+  const navigate = useNavigate();
+
+  /** navigate to detail page */
   const handleNavigation = (id: string) => {
     navigate(`/details/${id}`)
   }

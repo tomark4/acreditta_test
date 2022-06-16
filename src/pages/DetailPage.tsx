@@ -2,6 +2,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 
+/**
+ * Detail page component
+ * @author [jose quintero](https://jottasistemas.com)
+ */
+
 const DetailPage = () => {
   return (
     <div className="container mt-5 mb-5">

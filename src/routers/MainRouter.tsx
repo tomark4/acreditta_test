@@ -5,6 +5,12 @@ import {
 import DetailPage from "../pages/DetailPage";
 import HomePage from "../pages/HomePage";
 
+
+/**
+ * Main router navigation
+ * @author [jose quintero](https://jottasistemas.com)
+ */
+
 const MainRouter = () => {
   return (
     <Routes>

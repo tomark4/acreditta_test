@@ -3,7 +3,12 @@ import Navbar from "./components/shared/Navbar";
 import MainRouter from "./routers/MainRouter";
 import './style.css';
 
-function App() {
+/**
+ * App component
+ * @author [jose quintero](https://jottasistemascom) 
+ */
+
+const App = () =>{
 
   return (
     <div className="page">
