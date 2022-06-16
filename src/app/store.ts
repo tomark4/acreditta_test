@@ -3,7 +3,7 @@ import marvelReducer from '../store/marvelSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 
-// redux configuration store
+// redux configuration store with persist
 const persistConfig = {
   key: 'root',
   storage,
@@ -21,12 +21,6 @@ export const store = configureStore({
     serializableCheck: false,
   })
 })
-
-// export const store = configureStore({
-//   reducer: {
-//     marvel: marvelReducer,
-//   },
-// });
 
 export const persistor = persistStore(store)
 
