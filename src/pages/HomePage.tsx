@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../app/hooks';
 import { RootState } from '../app/store';
 import Card from '../components/Card';
-import { getCharacters } from '../services/marvel.service';
-import { updateType } from '../store/marvelSlice';
+import Loader from '../components/Loader';
+import { fetchData, updateCategory } from '../store/marvelSlice';
 
 /**
  * Home page component
@@ -20,25 +20,27 @@ const OPTIONS = [
 
 const HomePage = () => {
 
-  const [currentOption, setCurrentOption] = useState(OPTIONS[0].id);
   const dispatch = useAppDispatch();
-  const {data, loading, type} = useSelector((state:RootState) => state.marvel );
+  const {data, loading, category} = useSelector((state:RootState) => state.marvel );
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    dispatch(getCharacters(search))
-  },[search, dispatch])
+    const timer = setTimeout(() => {
+      dispatch(fetchData({category, name:search}))
+    },800)
+
+    return () => { clearTimeout(timer) }
+  },[search, dispatch, category])
   
 
   const handleChangeOption = (item:any) => {
-    setCurrentOption(item.id);
-    dispatch(updateType(item.name));
+    dispatch(updateCategory(item.name));
   }
 
   return (
     <div className="pt-5 container">
       <div>
-        <h4>{type}</h4>
+        <h4>{category}</h4>
         <form action="">
           <div className="mb-3">
             <input type="text" className="form-control form-control-lg"
@@ -51,7 +53,7 @@ const HomePage = () => {
             <ul className="search-options">
               {OPTIONS.map((item,i:number) =>  (
                 <li 
-                className={`${currentOption === item.id ? 'active' : null}`}
+                className={`${category === item.name ? 'active' : null}`}
                 onClick={() => handleChangeOption(item)}
                 key={i}
                 >{item.title}</li>
@@ -61,11 +63,11 @@ const HomePage = () => {
         </form>
 
         <div className="row mt-5">
-            { loading && <h1>Loading...</h1>}
+            { loading && <Loader />}
 
-            { !loading && (
+            { !loading && data.length > 0 && (
               data.map(item => (
-                <Card key={item} item={item}/>
+                <Card key={item.id} item={item}/>
               ))
             )}
         </div>

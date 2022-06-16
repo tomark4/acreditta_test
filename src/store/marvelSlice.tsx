@@ -1,37 +1,69 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { ParamsI, StateI } from "../interfaces/marvel.interface";
 import { getCharacters } from "../services/marvel.service";
 
-interface StateI {
-    loading: boolean,
-    data: any[],
-    type: "characters" | "comics" | "stories" | "series"
-}
 
-const initialState:StateI = {
+export const fetchData = createAsyncThunk(
+    'marvel/getCharacters',
+    async ( params:ParamsI,{rejectWithValue}) => {
+        try{
+            const { category, name } = params;
+            let resp:any;
+
+            switch(category){
+                case "characters":
+                    resp = await getCharacters(name)
+                break;
+
+                case "comics":
+                    //
+                break;
+
+                case "series":
+                    //
+                break;
+                
+                case "stories":
+                    //
+                break;
+            }
+            return resp.data.data.results;
+        } catch(e){
+            return rejectWithValue("Ocurrió un error");
+        }
+    }
+);
+
+export const initialState:StateI = {
     loading: false,
     data: [],
-    type: "characters"
+    category: "characters"
 }
 
 const marvelSlice = createSlice({
     name: 'marvel',
     initialState,
     reducers:{
-        updateType:(state, action) => {
-            state.type = action.payload
+        updateCategory:(state, action) => {
+            state.category = action.payload
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(getCharacters.pending, (state) => {
+        builder.addCase(fetchData.pending, (state) => {
+            state.data = [];
             state.loading = true;
         })
-        builder.addCase(getCharacters.fulfilled, (state, action:any) => {
+        builder.addCase(fetchData.fulfilled, (state, action:any) => {
             state.data = action.payload;
+            state.loading = false;
+        })
+        builder.addCase(fetchData.rejected, (state, action:any) => {
+            console.log(action.payload);
             state.loading = false;
         })
     }    
 })
 
-export const { updateType } = marvelSlice.actions;
+export const { updateCategory } = marvelSlice.actions;
 
 export default marvelSlice.reducer;

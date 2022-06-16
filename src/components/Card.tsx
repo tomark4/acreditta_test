@@ -13,21 +13,24 @@ type PropT = {
 
 const Card = ({item}:PropT) => {
     const navigate = useNavigate();
+    const { id, thumbnail, name } = item;
 
     /** navigate to detail page */
-    const handleNavigation = (id: string) => {
+    const handleNavigation = () => {
         navigate(`/details/${id}`)
     }
 
     return (
         <div className="col-md-4 mb-5"
-        onClick={() => handleNavigation(String(item)) }
+        onClick={handleNavigation}
         key={item}>
             <div className="card">
-                <img src="https://terrigen-cdn-dev.marvel.com/content/prod/1x/thor_lob_crd_01.jpg" 
-                className="card-img-top" alt="..." />
+                <div className="card-picture">
+                    <img src={`${thumbnail.path}.${thumbnail.extension}` } 
+                    className="card-img-top" alt="..." />
+                </div>
                 <div className="card-body">
-                <p className="card-text text-center"><b>character name</b></p>
+                <p className="card-text text-center"><b>{name}</b></p>
                 </div>
             </div>
         </div>

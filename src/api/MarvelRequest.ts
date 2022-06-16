@@ -1,3 +1,9 @@
+import axios from "axios";
 
-// TODO: configure axios
-export const MarvelRequest = {};
+/**
+ * config axios
+ */
+
+export const MarvelRequest = axios.create({
+    baseURL:`https://gateway.marvel.com:443/v1/public`
+});

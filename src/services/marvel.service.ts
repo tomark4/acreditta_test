@@ -1,30 +1,23 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { MarvelRequest } from "../api/MarvelRequest"
+import { apiMarvelAuthCredentials } from "../helpers/marvel-api-auth";
 
-const fetchData = (name?:string) => {
-    return new Promise((resolve:any, reject:any) => {
-        try{
-            setTimeout(() => {
-                let data = [1,2,3,4];
-                resolve(data);
-            },1500)
-        }catch(e){
-            reject(e)
-        }
-    })
-}
+const authCredentials = apiMarvelAuthCredentials()
 
 /**
  * Get characters from marvel api
  * @params name
  * @return
  */
-export const getCharacters = createAsyncThunk(
-    'marvel/getCharacters',
-    async (name?:string) => {
-        const resp = await fetchData()
-        return resp;
+export const getCharacters = async (name?:string) => {
+    let uri = `/characters?${authCredentials}`
+
+    if(name){
+        uri += `&nameStartsWith=${name}`
     }
-);
+
+    return await MarvelRequest.get(uri);
+}
+
 
 /**
  * Get comics from marvel api
