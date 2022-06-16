@@ -82,6 +82,8 @@ ul.search-options li:not(:first-child) {
     box-shadow: 0 0 7px 0 rgba(0,0,0,.8);
     margin: 10px auto;
     display: block;
+    width: 100%;
+    height: auto;
 }
 
 .card-img-top {

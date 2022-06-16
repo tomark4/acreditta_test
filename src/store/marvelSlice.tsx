@@ -37,13 +37,17 @@ export const fetchData = createAsyncThunk(
 export const initialState:StateI = {
     loading: false,
     data: [],
-    category: "characters"
+    category: "characters",
+    searchText: ""
 }
 
 const marvelSlice = createSlice({
     name: 'marvel',
     initialState,
     reducers:{
+        updateSearchText: (state, action) => {
+            state.searchText = action.payload;
+        },
         updateCategory:(state, action) => {
             state.category = action.payload
         }
@@ -64,6 +68,6 @@ const marvelSlice = createSlice({
     }    
 })
 
-export const { updateCategory } = marvelSlice.actions;
+export const { updateCategory, updateSearchText } = marvelSlice.actions;
 
 export default marvelSlice.reducer;

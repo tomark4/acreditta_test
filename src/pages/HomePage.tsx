@@ -1,10 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../app/hooks';
 import { RootState } from '../app/store';
 import Card from '../components/Card';
 import Loader from '../components/Loader';
-import { fetchData, updateCategory } from '../store/marvelSlice';
+import { 
+  fetchData, 
+  updateCategory, 
+  updateSearchText 
+} from '../store/marvelSlice';
 
 /**
  * Home page component
@@ -21,17 +25,16 @@ const OPTIONS = [
 const HomePage = () => {
 
   const dispatch = useAppDispatch();
-  const {data, loading, category} = useSelector((state:RootState) => state.marvel );
-  const [search, setSearch] = useState("");
+  const {data, loading, category, searchText} = useSelector((state:RootState) => state.marvel );
 
   useEffect(() => {
     
     const timer = setTimeout(() => {
-      dispatch(fetchData({category, name:search}))
+      dispatch(fetchData({category, name:searchText}))
     },1000)
 
     return () => { clearTimeout(timer) }
-  },[search, dispatch, category])
+  },[searchText, dispatch, category])
   
 
   const handleChangeOption = (item:any) => {
@@ -45,9 +48,9 @@ const HomePage = () => {
           <div className="mb-3">
             <input type="text" className="form-control form-control-lg"
             placeholder="Buscar..."
-            value={search} 
+            value={searchText} 
             name="search"
-            onChange={(e) => setSearch(e.target.value)}/>
+            onChange={(e) => dispatch(updateSearchText(e.target.value))}/>
           </div>
           <div className="mb-3">
             <ul className="search-options">

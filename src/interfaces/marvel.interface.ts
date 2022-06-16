@@ -4,7 +4,8 @@ export type CategoriesT = "characters" | "comics" | "stories" | "series";
 export interface StateI {
     loading: boolean,
     data: any[],
-    category: CategoriesT
+    category: CategoriesT,
+    searchText: string
 }
 
 
