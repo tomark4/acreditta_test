@@ -24,8 +24,14 @@ export const getCharacters = async (name?:string) => {
  * @params name
  * @returns Promise
  */
-export const getComics = (title?:string) => {
-    //
+export const getComics = async (title?:string) => {
+    let uri = `/comics?${authCredentials}`
+
+    if(title){
+        uri += `&titleStartsWith=${title}`
+    }
+
+    return await MarvelRequest.get(uri);
 }
 
 
@@ -34,8 +40,14 @@ export const getComics = (title?:string) => {
  * @params name
  * @returns Promise
  */
-export const getSeries = (title?:string) => {
-    //
+export const getSeries = async (title?:string) => {
+    let uri = `/series?${authCredentials}`
+
+    if(title){
+        uri += `&titleStartsWith=${title}`
+    }
+
+    return await MarvelRequest.get(uri);
 }
 
 
@@ -44,7 +56,13 @@ export const getSeries = (title?:string) => {
  * @params name
  * @returns Promise
  */
-export const getStories = (title?:string) => {
-    //
+export const getStories = async (title?:string) => {
+    let uri = `/stories?${authCredentials}`
+
+    if(title){
+        uri += `&titleStartsWith=${title}`
+    }
+
+    return await MarvelRequest.get(uri);
 }
 

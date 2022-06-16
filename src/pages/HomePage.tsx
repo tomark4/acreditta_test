@@ -25,9 +25,10 @@ const HomePage = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
+    
     const timer = setTimeout(() => {
       dispatch(fetchData({category, name:search}))
-    },800)
+    },1000)
 
     return () => { clearTimeout(timer) }
   },[search, dispatch, category])
@@ -40,7 +41,6 @@ const HomePage = () => {
   return (
     <div className="pt-5 container">
       <div>
-        <h4>{category}</h4>
         <form action="">
           <div className="mb-3">
             <input type="text" className="form-control form-control-lg"

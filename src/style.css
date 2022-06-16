@@ -84,9 +84,8 @@ ul.search-options li:not(:first-child) {
     display: block;
 }
 
-.card-picture{
+.card-img-top {
     width: 100%;
-    height: 350px;
-    overflow: hidden;
+    height: 30vw;
+    object-fit: cover;
 }
-

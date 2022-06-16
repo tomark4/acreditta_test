@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { ParamsI, StateI } from "../interfaces/marvel.interface";
-import { getCharacters } from "../services/marvel.service";
+import { getCharacters, getComics, getSeries, getStories } from "../services/marvel.service";
 
 
 export const fetchData = createAsyncThunk(
@@ -16,15 +16,15 @@ export const fetchData = createAsyncThunk(
                 break;
 
                 case "comics":
-                    //
+                    resp = await getComics(name)
                 break;
 
                 case "series":
-                    //
+                    resp = await getSeries(name)
                 break;
                 
                 case "stories":
-                    //
+                    resp = await getStories(name)
                 break;
             }
             return resp.data.data.results;

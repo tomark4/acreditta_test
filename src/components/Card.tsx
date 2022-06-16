@@ -1,4 +1,6 @@
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { RootState } from '../app/store';
 
 
 /**
@@ -13,7 +15,8 @@ type PropT = {
 
 const Card = ({item}:PropT) => {
     const navigate = useNavigate();
-    const { id, thumbnail, name } = item;
+    const { category } = useSelector((state:RootState) => state.marvel);
+    const { id, thumbnail, name, title } = item;
 
     /** navigate to detail page */
     const handleNavigation = () => {
@@ -25,12 +28,16 @@ const Card = ({item}:PropT) => {
         onClick={handleNavigation}
         key={item}>
             <div className="card">
-                <div className="card-picture">
-                    <img src={`${thumbnail.path}.${thumbnail.extension}` } 
-                    className="card-img-top" alt="..." />
-                </div>
+                { category !== "stories" && (
+                    <div className="card-picture">
+                        { thumbnail && (
+                            <img src={`${thumbnail.path}.${thumbnail.extension}` } 
+                            className="card-img-top" alt="..." />
+                        )}
+                    </div>
+                )}
                 <div className="card-body">
-                <p className="card-text text-center"><b>{name}</b></p>
+                    <h5 className="card-title text-center"><b>{name || title}</b></h5>
                 </div>
             </div>
         </div>
