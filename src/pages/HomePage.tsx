@@ -1,5 +1,10 @@
-import React, { useState } from 'react'
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../app/hooks';
+import { RootState } from '../app/store';
+import Card from '../components/Card';
+import { getCharacters } from '../services/marvel.service';
+import { updateType } from '../store/marvelSlice';
 
 /**
  * Home page component
@@ -7,57 +12,62 @@ import { useNavigate } from "react-router-dom";
  */
 
 const OPTIONS = [
-  "Personajes",
-  "Comics",
-  "Series",
-  "Historias"
+  {id: '1', name: "characters", title: "Personajes"},
+  {id: '2', name: "comics", title: "Comics"},
+  {id: '3', name: "stories", title: "Historias"},
+  {id: '4', name: "series", title: "Series"},
 ];
 
 const HomePage = () => {
 
-  const [currentOption, setCurrentOption] = useState(OPTIONS[0]);
-  const navigate = useNavigate();
+  const [currentOption, setCurrentOption] = useState(OPTIONS[0].id);
+  const dispatch = useAppDispatch();
+  const {data, loading, type} = useSelector((state:RootState) => state.marvel );
+  const [search, setSearch] = useState("");
 
-  /** navigate to detail page */
-  const handleNavigation = (id: string) => {
-    navigate(`/details/${id}`)
+  useEffect(() => {
+    dispatch(getCharacters(search))
+  },[search, dispatch])
+  
+
+  const handleChangeOption = (item:any) => {
+    setCurrentOption(item.id);
+    dispatch(updateType(item.name));
   }
 
   return (
     <div className="pt-5 container">
       <div>
-        
+        <h4>{type}</h4>
         <form action="">
           <div className="mb-3">
             <input type="text" className="form-control form-control-lg"
-            placeholder="Buscar..."/>
+            placeholder="Buscar..."
+            value={search} 
+            name="search"
+            onChange={(e) => setSearch(e.target.value)}/>
           </div>
           <div className="mb-3">
             <ul className="search-options">
-              {OPTIONS.map(item =>  (
+              {OPTIONS.map((item,i:number) =>  (
                 <li 
-                className={`${currentOption === item ? 'active' : null}`}
-                onClick={() => setCurrentOption(item)}
-                >{item}</li>
+                className={`${currentOption === item.id ? 'active' : null}`}
+                onClick={() => handleChangeOption(item)}
+                key={i}
+                >{item.title}</li>
               ))}
             </ul>
           </div>
         </form>
 
         <div className="row mt-5">
-            {[1,2,3,5,6,7,8,9,10].map(item => (
-              <div className="col-md-4 mb-5"
-              onClick={() => handleNavigation(String(item)) }
-              key={item}>
-                <div className="card">
-                  <img src="https://terrigen-cdn-dev.marvel.com/content/prod/1x/thor_lob_crd_01.jpg" 
-                  className="card-img-top" alt="..." />
-                  <div className="card-body">
-                    <p className="card-text text-center"><b>character name</b></p>
-                  </div>
-                </div>
-              </div>
-            ))}
+            { loading && <h1>Loading...</h1>}
+
+            { !loading && (
+              data.map(item => (
+                <Card key={item} item={item}/>
+              ))
+            )}
         </div>
       </div>
     </div>

@@ -51,12 +51,12 @@ const testSlice = createSlice({
 
 export const { incrementValue, decrement } = testSlice.actions;
 
-export const incrementIfNana = (amount: number):AppThunk => async (dispatch, getState) => {
-    let {value} = getState().test;
-    const r = await fetchData();
-    console.log(r)
-    dispatch(incrementValue(value+amount));
-};
+// export const incrementIfNana = (amount: number):AppThunk => async (dispatch, getState) => {
+//     let {value} = getState().test;
+//     const r = await fetchData();
+//     console.log(r)
+//     dispatch(incrementValue(value+amount));
+// };
 
 
 export default testSlice.reducer;

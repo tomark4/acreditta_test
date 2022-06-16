@@ -1,11 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import testReducer from '../store/testSlice';
+import marvelReducer from '../store/marvelSlice';
 
 // redux configuration store
 
 export const store = configureStore({
   reducer: {
-    test: testReducer,
+    marvel: marvelReducer,
   },
 });
 
