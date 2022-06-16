@@ -21,7 +21,7 @@ const DetailPage = () => {
     const search = data.find(obj => obj.id === Number(id));
     setItem(search);
     setLoading(false);
-  },[id])
+  },[id, data])
 
   if(loading){
     return <Loader />
